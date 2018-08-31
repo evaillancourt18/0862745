@@ -11,6 +11,8 @@ import java.util.Arrays;
 import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 
+//ajout tag
+
 public class VParametres extends ConstraintLayout {
 
     public VParametres(Context context) {
