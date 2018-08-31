@@ -1,11 +1,13 @@
-package ca.cours5b5.etiennevaillancourt;
+package ca.cours5b5.etiennevaillancourt.activites;
 
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class Parametres extends AppCompatActivity {
+import ca.cours5b5.etiennevaillancourt.R;
+
+public class AParametres extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
