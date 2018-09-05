@@ -3,6 +3,7 @@ package ca.cours5b5.etiennevaillancourt.vues;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -27,10 +28,14 @@ public class VParametres extends ConstraintLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    static{
+        Log.d("Atelier04", VParametres.class.getSimpleName() + "::static");
+
+    }
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
-
+        Log.d("Atelier04", VParametres.class.getSimpleName() + "::onFinishInflate");
         Spinner spinHauteur = this.findViewById(R.id.spinnerHauteur);
         ArrayAdapter<Integer> adapterHauteur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
         spinHauteur.setAdapter(adapterHauteur);
