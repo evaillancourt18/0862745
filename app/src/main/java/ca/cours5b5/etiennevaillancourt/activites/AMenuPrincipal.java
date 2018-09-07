@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.etiennevaillancourt.R;
+import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
+import ca.cours5b5.etiennevaillancourt.serialisation.Jsonification;
 import ca.cours5b5.etiennevaillancourt.vues.VMenuPrincipal;
 
-public class AMenuPrincipal extends AppCompatActivity {
+public class AMenuPrincipal extends Activite {
 
     static{
         Log.d("Atelier04", AMenuPrincipal.class.getSimpleName() + "::static");

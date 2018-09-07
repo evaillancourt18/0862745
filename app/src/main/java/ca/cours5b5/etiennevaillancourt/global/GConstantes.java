@@ -12,4 +12,6 @@ public class GConstantes {
     public static int MAXGAGNER=4;
     public static int DEFAUTGAGNER=4;
 
+    public static char SEPARATEUR='/';
+
 }

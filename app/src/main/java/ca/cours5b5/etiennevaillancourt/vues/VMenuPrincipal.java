@@ -11,7 +11,14 @@ import android.widget.Button;
 import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.activites.AParametres;
 
-public class VMenuPrincipal extends ConstraintLayout {
+public class VMenuPrincipal extends Vue {
+
+
+    static{
+        Log.d("Atelier04", VMenuPrincipal.class.getSimpleName() + "::static");
+
+    }
+
     public VMenuPrincipal(Context context) {
         super(context);
     }
@@ -24,10 +31,6 @@ public class VMenuPrincipal extends ConstraintLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    static{
-        Log.d("Atelier04", VMenuPrincipal.class.getSimpleName() + "::static");
-
-    }
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
