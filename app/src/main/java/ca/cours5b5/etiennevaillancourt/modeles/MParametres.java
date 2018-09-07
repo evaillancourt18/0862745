@@ -1,10 +1,14 @@
 package ca.cours5b5.etiennevaillancourt.modeles;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurDeSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
+import ca.cours5b5.etiennevaillancourt.serialisation.Serialisable;
 
 public class MParametres extends Modele{
 
@@ -84,4 +88,34 @@ public class MParametres extends Modele{
         }
         return temp;
     }
+
+
+    public Map<String, Object> serialiser(Serialisable obj) throws ErreurDeSerialisation {
+        Map<String, Object> objetJson = new HashMap<>();
+
+        if(obj instanceof MParametres){
+            MParametres mParametres = (MParametres) obj;
+            objetJson.put("hauteur",hauteur);
+            objetJson.put("largeur",largeur);
+            objetJson.put("pourGagner",pourGagner);
+
+        }
+
+        return objetJson;
+
+    }
+
+    public void deserialiser (Map<String, Object> objetJson){
+        for(Map.Entry entry : objetJson.entrySet()){
+            if(entry.getKey().equals("hauteur")){
+                hauteur = Integer.valueOf((String)entry.getValue());
+            }else if(entry.getKey().equals("largeur")){
+                largeur = Integer.valueOf((String)entry.getValue());
+            }else if(entry.getKey().equals("pourGagner")){
+                pourGagner=Integer.valueOf((String)entry.getValue());
+            }
+        }
+    }
+
+
 }
