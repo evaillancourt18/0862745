@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.Map;
+
 import ca.cours5b5.etiennevaillancourt.R;
+import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
+import ca.cours5b5.etiennevaillancourt.serialisation.Jsonification;
 
 public class AParametres extends Activite {
 
@@ -21,6 +25,12 @@ public class AParametres extends Activite {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parametres);
 
+        if(savedInstanceState !=null){
+            String json=savedInstanceState.getString("MParametres");
+            Map<String, Object> objetJson= Jsonification.enObjetJson(json);
+            MParametres.instance.aPartirObjetJson(objetJson);
+        }
+
 
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -31,6 +41,8 @@ public class AParametres extends Activite {
         }
 
     }
+
+
 
     @Override
     protected void onResume(){
@@ -49,7 +61,11 @@ public class AParametres extends Activite {
         Log.d("Atelier04", AParametres.class.getSimpleName() + "::onSaveInstanceState");
         super.onSaveInstanceState(outState);
 
-        outState.putInt("MaCle",18);
+        Map<String, Object> objetJson= MParametres.instance.enObjetJson();
+        String json = Jsonification.enChaine(objetJson);
+
+        outState.putString("MParametres",json);
+        Log.d("Atelier05", json);
     }
 
     @Override

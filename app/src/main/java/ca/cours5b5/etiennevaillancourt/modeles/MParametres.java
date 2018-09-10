@@ -8,11 +8,10 @@ import java.util.Map;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurDeSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
-import ca.cours5b5.etiennevaillancourt.serialisation.Serialisable;
 
 public class MParametres extends Modele{
 
-    public static MParametres instance;
+    public static MParametres instance = new MParametres();
 
     @AttributSerialisable
     public Integer hauteur;
@@ -34,6 +33,7 @@ public class MParametres extends Modele{
         choixHauteur = new ArrayList<Integer>();
         choixLargeur = new ArrayList<Integer>();
         choixPourGagner = new ArrayList<Integer>();
+        genererListesDeChoix();
 
 
     }
@@ -90,22 +90,12 @@ public class MParametres extends Modele{
     }
 
 
-    public Map<String, Object> serialiser(Serialisable obj) throws ErreurDeSerialisation {
-        Map<String, Object> objetJson = new HashMap<>();
 
-        if(obj instanceof MParametres){
-            MParametres mParametres = (MParametres) obj;
-            objetJson.put("hauteur",hauteur);
-            objetJson.put("largeur",largeur);
-            objetJson.put("pourGagner",pourGagner);
 
-        }
 
-        return objetJson;
 
-    }
-
-    public void deserialiser (Map<String, Object> objetJson){
+    @Override
+    public void aPartirObjetJson(Map<String, Object> objetJson) {
         for(Map.Entry entry : objetJson.entrySet()){
             if(entry.getKey().equals("hauteur")){
                 hauteur = Integer.valueOf((String)entry.getValue());
@@ -117,5 +107,15 @@ public class MParametres extends Modele{
         }
     }
 
+    @Override
+    public Map<String, Object> enObjetJson() {
+        Map<String, Object> objetJson = new HashMap<>();
+
+            objetJson.put("hauteur",hauteur.toString());
+            objetJson.put("largeur",largeur.toString());
+            objetJson.put("pourGagner",pourGagner.toString());
+
+        return objetJson;
+}
 
 }

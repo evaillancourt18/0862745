@@ -11,30 +11,19 @@ public class Jsonification {
 
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    public static <T extends Serialisable> T aPartirJson(Class<T> classeAImplanter, String json){
+ public static Map<String, Object> enObjetJson(String json){
 
-        Map<String, Object> objetJson = gson.fromJson(json, Map.class);
+     Map<String, Object> objet = gson.fromJson(json,Map.class);
 
-        Serialisable obj = null;
+     return objet;
 
-        if(classeAImplanter.getSimpleName().equals(MParametres.class.getSimpleName())){
+ }
 
-            obj = (Serialisable) new MParametres();
+ public static String enChaine(Map<String, Object> objetJson){
 
-        }
+     String temp = gson.toJson(objetJson);
 
-
-
-
-        Serialisation.deserialiser( (Serialisable) obj, objetJson);
-        return  (T) obj;
-    }
-
-    public static String enJson(Serialisable obj){
-
-        Map<String, Object> objetJson = MParametres.instance.serialiser(obj);
-
-        return gson.toJson(objetJson);
-    }
+     return temp;
+ }
 
 }
