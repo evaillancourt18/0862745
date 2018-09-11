@@ -47,7 +47,7 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixHauteur().get(0); i<=GConstantes.MAXHAUTEUR;i++) {
             adapterHauteur.add(i);
         }
-        spinHauteur.setSelection(adapterHauteur.getPosition(GConstantes.DEFAUTHAUTEUR));
+        spinHauteur.setSelection(adapterHauteur.getPosition(MParametres.instance.getHauteur()));
 
         spinHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
@@ -69,7 +69,7 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixLargeur().get(0); i<=GConstantes.MAXLARGEUR;i++) {
             adapterLargeur.add(i);
         }
-        spinLargeur.setSelection(adapterLargeur.getPosition(GConstantes.DEFAUTLARGEUR));
+        spinLargeur.setSelection(adapterLargeur.getPosition(MParametres.instance.getLargeur()));
 
         spinLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
@@ -91,7 +91,7 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixPourGagner().get(0); i<=GConstantes.MAXGAGNER;i++) {
             adapterGagner.add(i);
         }
-        spinGagner.setSelection(adapterGagner.getPosition(GConstantes.DEFAUTGAGNER));
+        spinGagner.setSelection(adapterGagner.getPosition(MParametres.instance.getPourGagner()));
 
         spinGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
