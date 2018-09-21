@@ -1,17 +1,26 @@
 package ca.cours5b5.etiennevaillancourt.modeles;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurDeSerialisation;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
+
+import static java.lang.Math.max;
 
 public class MParametres extends Modele{
 
     public static MParametres instance = new MParametres();
+
+
 
     @AttributSerialisable
     public Integer hauteur;
@@ -37,6 +46,7 @@ public class MParametres extends Modele{
 
 
     }
+
 
     public List<Integer> getChoixHauteur(){
     return choixHauteur;
@@ -77,7 +87,7 @@ public class MParametres extends Modele{
     private void genererListesDeChoix(){
         choixHauteur = genererListeChoix(GConstantes.MINHAUTEUR,GConstantes.MAXHAUTEUR);
         choixLargeur = genererListeChoix(GConstantes.MINLARGEUR,GConstantes.MAXLARGEUR);
-        choixPourGagner = genererListeChoix(GConstantes.MINGAGNER,GConstantes.MAXGAGNER);
+        choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
 
     }
 

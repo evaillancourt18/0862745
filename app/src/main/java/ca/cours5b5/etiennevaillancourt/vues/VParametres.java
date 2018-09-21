@@ -12,6 +12,9 @@ import android.widget.Spinner;
 import java.util.Arrays;
 
 import ca.cours5b5.etiennevaillancourt.R;
+import ca.cours5b5.etiennevaillancourt.controleurs.Action;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 
@@ -47,13 +50,16 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixHauteur().get(0); i<=GConstantes.MAXHAUTEUR;i++) {
             adapterHauteur.add(i);
         }
-        spinHauteur.setSelection(adapterHauteur.getPosition(MParametres.instance.getHauteur()));
+        spinHauteur.setSelection(adapterHauteur.getPosition(GConstantes.DEFAUTHAUTEUR));
 
         spinHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                Action actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setHauteur(leChoix);
+                actionHauteur.setArguments(leChoix);
+                actionHauteur.executerDesQuePossible();
             }
 
             @Override
@@ -69,13 +75,16 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixLargeur().get(0); i<=GConstantes.MAXLARGEUR;i++) {
             adapterLargeur.add(i);
         }
-        spinLargeur.setSelection(adapterLargeur.getPosition(MParametres.instance.getLargeur()));
+        spinLargeur.setSelection(adapterLargeur.getPosition(GConstantes.DEFAUTLARGEUR));
 
         spinLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                Action actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setLargeur(leChoix);
+                actionLargeur.setArguments(leChoix);
+                actionLargeur.executerDesQuePossible();
             }
 
             @Override
@@ -91,13 +100,17 @@ public class VParametres extends Vue {
         for(int i=MParametres.instance.getChoixPourGagner().get(0); i<=GConstantes.MAXGAGNER;i++) {
             adapterGagner.add(i);
         }
-        spinGagner.setSelection(adapterGagner.getPosition(MParametres.instance.getPourGagner()));
+        spinGagner.setSelection(adapterGagner.getPosition(GConstantes.DEFAUTGAGNER));
 
         spinGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                Action actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setPourGagner(leChoix);
+                actionPourGagner.setArguments(leChoix);
+                actionPourGagner.executerDesQuePossible();
+
             }
 
             @Override
@@ -106,5 +119,7 @@ public class VParametres extends Vue {
             }
 
         });
+
+
     }
 }

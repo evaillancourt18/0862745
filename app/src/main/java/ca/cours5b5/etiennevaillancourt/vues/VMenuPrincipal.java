@@ -10,6 +10,9 @@ import android.widget.Button;
 
 import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.activites.AParametres;
+import ca.cours5b5.etiennevaillancourt.controleurs.Action;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 
 public class VMenuPrincipal extends Vue {
 
@@ -38,6 +41,13 @@ public class VMenuPrincipal extends Vue {
 
 
         Button boutonParametres = this.findViewById(R.id.bouton_parametres);
+        boutonParametres.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Action actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
+                actionParametres.executerDesQuePossible();
+            }
+        });
 
     }
 

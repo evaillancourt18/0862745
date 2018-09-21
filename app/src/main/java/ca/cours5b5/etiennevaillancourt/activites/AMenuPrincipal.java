@@ -9,11 +9,16 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.etiennevaillancourt.R;
+import ca.cours5b5.etiennevaillancourt.controleurs.Action;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 import ca.cours5b5.etiennevaillancourt.serialisation.Jsonification;
 import ca.cours5b5.etiennevaillancourt.vues.VMenuPrincipal;
 
-public class AMenuPrincipal extends Activite {
+public class AMenuPrincipal extends Activite implements Fournisseur {
 
     static{
         Log.d("Atelier04", AMenuPrincipal.class.getSimpleName() + "::static");
@@ -26,6 +31,16 @@ public class AMenuPrincipal extends Activite {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuprincipal);
+
+        ControleurAction.fournirAction(this,
+                GCommande.OUVRIR_MENU_PARAMETRES,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+                        goToAnActivity();
+                    }
+                });
+
 
     }
 
@@ -55,7 +70,7 @@ public class AMenuPrincipal extends Activite {
         super.onDestroy();
     }
 
-    public void goToAnActivity(View view){
+    public void goToAnActivity(){
         Intent monIntention = new Intent(this, AParametres.class);
         this.startActivity(monIntention);
     }

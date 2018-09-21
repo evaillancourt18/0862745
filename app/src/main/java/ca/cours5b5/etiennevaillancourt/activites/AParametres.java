@@ -66,6 +66,7 @@ public class AParametres extends Activite {
 
         outState.putString("MParametres",json);
         Log.d("Atelier05", json);
+
     }
 
     @Override
