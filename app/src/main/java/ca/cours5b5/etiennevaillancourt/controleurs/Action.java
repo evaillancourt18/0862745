@@ -21,10 +21,11 @@ public class Action {
         Action action = new Action();
 
         if(args!=null){
-            action.setArguments(args);
+            action.setArguments(args.clone());
 
         }
-
+            action.fournisseur=fournisseur;
+            action.listenerFournisseur=listenerFournisseur;
         return action;
         }
 

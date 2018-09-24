@@ -10,6 +10,7 @@ import java.util.Map;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
+import ca.cours5b5.etiennevaillancourt.modeles.Modele;
 
 public class ControleurAction {
 
@@ -32,9 +33,7 @@ public class ControleurAction {
     }
 
     public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur){
-        Action action = demanderAction(commande);
-        action.fournisseur = fournisseur;
-        action.listenerFournisseur = listenerFournisseur;
+        enregistrerFournisseur(fournisseur,commande,listenerFournisseur);
 
         executerActionsExecutables();
     }
@@ -49,6 +48,7 @@ public class ControleurAction {
             if (siActionExecutable(action)){
                 fileAttenteExecution.remove(action);
                 executerMaintenant(action);
+                lancerObservationSiApplicable(action);
 
             }
         }
@@ -60,20 +60,24 @@ public class ControleurAction {
     }
 
     private static void lancerObservationSiApplicable(Action action){
-
+        if(action.fournisseur instanceof Modele){
+            ControleurObservation.lancerObservation((Modele)action.fournisseur);
+        }
     }
 
     private static synchronized void executerMaintenant(Action action){
-        action.listenerFournisseur.executer();
+        action.listenerFournisseur.executer(action.args);
 
     }
 
     private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur){
-
+        Action action = demanderAction(commande);
+        action.fournisseur=fournisseur;
+        action.listenerFournisseur=listenerFournisseur;
     }
 
     private static void ajouterActionEnFileDAttente(Action action){
-        Action clone = action ;
+        Action clone = action.cloner() ;
         fileAttenteExecution.add(clone);
     }
 

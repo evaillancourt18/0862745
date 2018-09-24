@@ -14,16 +14,25 @@ import java.util.Arrays;
 import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.controleurs.Action;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurObservation;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
+import ca.cours5b5.etiennevaillancourt.modeles.Modele;
+
+import static java.lang.Math.max;
 
 //ajout tag
 
 public class VParametres extends Vue {
 
+    Spinner spinHauteur, spinLargeur, spinGagner;
+    ArrayAdapter<Integer> adapterHauteur, adapterLargeur, adapterGagner;
 
-    static{
+
+
+    static {
         Log.d("Atelier04", VParametres.class.getSimpleName() + "::static");
 
     }
@@ -41,20 +50,18 @@ public class VParametres extends Vue {
     }
 
     @Override
-    protected void onFinishInflate(){
+    protected void onFinishInflate() {
         super.onFinishInflate();
         Log.d("Atelier04", VParametres.class.getSimpleName() + "::onFinishInflate");
-        Spinner spinHauteur = this.findViewById(R.id.spinnerHauteur);
-        ArrayAdapter<Integer> adapterHauteur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
+        spinHauteur = this.findViewById(R.id.spinnerHauteur);
+        adapterHauteur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
         spinHauteur.setAdapter(adapterHauteur);
-        for(int i=MParametres.instance.getChoixHauteur().get(0); i<=GConstantes.MAXHAUTEUR;i++) {
-            adapterHauteur.add(i);
-        }
+        adapterHauteur.addAll(MParametres.instance.getChoixHauteur());
         spinHauteur.setSelection(adapterHauteur.getPosition(GConstantes.DEFAUTHAUTEUR));
 
-        spinHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setHauteur(leChoix);
@@ -63,23 +70,21 @@ public class VParametres extends Vue {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
 
         });
 
-        Spinner spinLargeur = this.findViewById(R.id.spinnerLargeur);
-        ArrayAdapter<Integer> adapterLargeur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
+        spinLargeur = this.findViewById(R.id.spinnerLargeur);
+        adapterLargeur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
         spinLargeur.setAdapter(adapterLargeur);
-        for(int i=MParametres.instance.getChoixLargeur().get(0); i<=GConstantes.MAXLARGEUR;i++) {
-            adapterLargeur.add(i);
-        }
+        adapterLargeur.addAll(MParametres.instance.getChoixLargeur());
         spinLargeur.setSelection(adapterLargeur.getPosition(GConstantes.DEFAUTLARGEUR));
 
-        spinLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setLargeur(leChoix);
@@ -88,23 +93,21 @@ public class VParametres extends Vue {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
 
         });
 
-        Spinner spinGagner = this.findViewById(R.id.spinnerGagner);
-        ArrayAdapter<Integer> adapterGagner = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
+        spinGagner = this.findViewById(R.id.spinnerGagner);
+        adapterGagner = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
         spinGagner.setAdapter(adapterGagner);
-        for(int i=MParametres.instance.getChoixPourGagner().get(0); i<=GConstantes.MAXGAGNER;i++) {
-            adapterGagner.add(i);
-        }
+        adapterGagner.addAll(MParametres.instance.getChoixPourGagner());
         spinGagner.setSelection(adapterGagner.getPosition(GConstantes.DEFAUTGAGNER));
 
-        spinGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
                 MParametres.instance.setPourGagner(leChoix);
@@ -114,11 +117,33 @@ public class VParametres extends Vue {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
 
         });
+
+        ControleurObservation.observerModele(MParametres.class.getSimpleName(), new ListenerObservateur() {
+            @Override
+            public void reagirChangementAuModele(Modele modele) {
+                afficherParametres((MParametres) modele);
+            }
+
+
+        });
+
+    }
+    private void afficherParametres(MParametres modele){
+        adapterHauteur.clear();
+        adapterHauteur.addAll(modele.getChoixHauteur());
+
+        adapterLargeur.clear();
+        adapterLargeur.addAll(modele.getChoixLargeur());
+
+        adapterGagner.clear();
+        adapterGagner.addAll(modele.getChoixPourGagner());
+
+
 
 
     }

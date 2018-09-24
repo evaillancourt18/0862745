@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurDeSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
@@ -16,7 +17,7 @@ import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
 
 import static java.lang.Math.max;
 
-public class MParametres extends Modele{
+public class MParametres extends Modele implements Fournisseur{
 
     public static MParametres instance = new MParametres();
 
@@ -43,6 +44,26 @@ public class MParametres extends Modele{
         choixLargeur = new ArrayList<Integer>();
         choixPourGagner = new ArrayList<Integer>();
         genererListesDeChoix();
+        ControleurAction.fournirAction(this, GCommande.CHOISIR_HAUTEUR, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                setHauteur((int)args[0]);
+                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
+            }
+        });
+        ControleurAction.fournirAction(this, GCommande.CHOISIR_LARGEUR, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                setLargeur((int)args[0]);
+                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
+            }
+        });
+        ControleurAction.fournirAction(this, GCommande.CHOISIR_POUR_GAGNER, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                setPourGagner((int)args[0]);
+            }
+        });
 
 
     }
@@ -93,7 +114,7 @@ public class MParametres extends Modele{
 
     private List<Integer> genererListeChoix(int min, int max){
         List<Integer> temp = new ArrayList<Integer>();
-        for(int i = min;i<max;i++){
+        for(int i = min;i<=max;i++){
             temp.add(i);
         }
         return temp;
