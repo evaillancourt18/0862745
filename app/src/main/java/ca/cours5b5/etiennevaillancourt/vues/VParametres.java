@@ -64,7 +64,7 @@ public class VParametres extends Vue {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
-                MParametres.instance.setHauteur(leChoix);
+                MParametres.instance.getParametresPartie().setHauteur(leChoix);
                 actionHauteur.setArguments(leChoix);
                 actionHauteur.executerDesQuePossible();
             }
@@ -87,7 +87,7 @@ public class VParametres extends Vue {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
-                MParametres.instance.setLargeur(leChoix);
+                MParametres.instance.getParametresPartie().setLargeur(leChoix);
                 actionLargeur.setArguments(leChoix);
                 actionLargeur.executerDesQuePossible();
             }
@@ -110,7 +110,7 @@ public class VParametres extends Vue {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Action actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
                 Integer leChoix = (Integer) parent.getAdapter().getItem(position);
-                MParametres.instance.setPourGagner(leChoix);
+                MParametres.instance.getParametresPartie().setPourGagner(leChoix);
                 actionPourGagner.setArguments(leChoix);
                 actionPourGagner.executerDesQuePossible();
 

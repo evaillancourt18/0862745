@@ -37,7 +37,16 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 new ListenerFournisseur() {
                     @Override
                     public void executer(Object... args) {
-                        goToAnActivity();
+                        goToParametres();
+                    }
+                });
+
+        ControleurAction.fournirAction(this,
+                GCommande.OUVRIR_MENU_PARTIE,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+                        goToPartie();
                     }
                 });
 
@@ -70,8 +79,13 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         super.onDestroy();
     }
 
-    public void goToAnActivity(){
+    public void goToParametres(){
         Intent monIntention = new Intent(this, AParametres.class);
+        this.startActivity(monIntention);
+    }
+
+    public void goToPartie(){
+        Intent monIntention = new Intent(this, APartie.class);
         this.startActivity(monIntention);
     }
 }

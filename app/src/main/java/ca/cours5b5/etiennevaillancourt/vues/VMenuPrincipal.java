@@ -49,6 +49,17 @@ public class VMenuPrincipal extends Vue {
             }
         });
 
+        Button boutonPartie = this.findViewById(R.id.bouton_partie);
+        boutonPartie.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Action actionPartie = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARTIE);
+                actionPartie.executerDesQuePossible();
+            }
+        });
+
+
+
     }
 
 

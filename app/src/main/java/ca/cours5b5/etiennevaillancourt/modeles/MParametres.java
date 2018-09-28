@@ -21,25 +21,19 @@ public class MParametres extends Modele implements Fournisseur{
 
     public static MParametres instance = new MParametres();
 
-
-
     @AttributSerialisable
-    public Integer hauteur;
+    public MParametresPartie parametresPartie;
+    private String __parametresPartie= "parametresPartie";
 
-    @AttributSerialisable
-    public Integer largeur;
 
-    @AttributSerialisable
-    public Integer pourGagner;
+
 
     private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
 
     public MParametres(){
-        hauteur = GConstantes.DEFAUTHAUTEUR;
-        largeur = GConstantes.DEFAUTLARGEUR;
-        pourGagner = GConstantes.DEFAUTGAGNER;
+        parametresPartie = new MParametresPartie();
         choixHauteur = new ArrayList<Integer>();
         choixLargeur = new ArrayList<Integer>();
         choixPourGagner = new ArrayList<Integer>();
@@ -47,21 +41,21 @@ public class MParametres extends Modele implements Fournisseur{
         ControleurAction.fournirAction(this, GCommande.CHOISIR_HAUTEUR, new ListenerFournisseur() {
             @Override
             public void executer(Object... args) {
-                setHauteur((int)args[0]);
-                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
+                parametresPartie.setHauteur((int)args[0]);
+                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
             }
         });
         ControleurAction.fournirAction(this, GCommande.CHOISIR_LARGEUR, new ListenerFournisseur() {
             @Override
             public void executer(Object... args) {
-                setLargeur((int)args[0]);
-                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
+                parametresPartie.setLargeur((int)args[0]);
+                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
             }
         });
         ControleurAction.fournirAction(this, GCommande.CHOISIR_POUR_GAGNER, new ListenerFournisseur() {
             @Override
             public void executer(Object... args) {
-                setPourGagner((int)args[0]);
+                parametresPartie.setPourGagner((int)args[0]);
             }
         });
 
@@ -81,34 +75,16 @@ public class MParametres extends Modele implements Fournisseur{
         return choixPourGagner;
     }
 
-    public Integer getHauteur() {
-        return hauteur;
+    public MParametresPartie getParametresPartie() {
+        return parametresPartie;
     }
 
-    public Integer getLargeur() {
-        return largeur;
-    }
 
-    public Integer getPourGagner() {
-        return pourGagner;
-    }
-
-    public void setHauteur(Integer hauteur) {
-        this.hauteur = hauteur;
-    }
-
-    public void setLargeur(Integer largeur){
-        this.largeur = largeur;
-    }
-
-    public void setPourGagner(Integer pourGagner) {
-        this.pourGagner = pourGagner;
-    }
 
     private void genererListesDeChoix(){
         choixHauteur = genererListeChoix(GConstantes.MINHAUTEUR,GConstantes.MAXHAUTEUR);
         choixLargeur = genererListeChoix(GConstantes.MINLARGEUR,GConstantes.MAXLARGEUR);
-        choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(getHauteur(),getLargeur())*75/100);
+        choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
 
     }
 
@@ -129,11 +105,11 @@ public class MParametres extends Modele implements Fournisseur{
     public void aPartirObjetJson(Map<String, Object> objetJson) {
         for(Map.Entry entry : objetJson.entrySet()){
             if(entry.getKey().equals("hauteur")){
-                hauteur = Integer.valueOf((String)entry.getValue());
+                parametresPartie.hauteur = Integer.valueOf((String)entry.getValue());
             }else if(entry.getKey().equals("largeur")){
-                largeur = Integer.valueOf((String)entry.getValue());
+                parametresPartie.largeur = Integer.valueOf((String)entry.getValue());
             }else if(entry.getKey().equals("pourGagner")){
-                pourGagner=Integer.valueOf((String)entry.getValue());
+                parametresPartie.pourGagner=Integer.valueOf((String)entry.getValue());
             }
         }
     }
@@ -142,9 +118,9 @@ public class MParametres extends Modele implements Fournisseur{
     public Map<String, Object> enObjetJson() {
         Map<String, Object> objetJson = new HashMap<>();
 
-            objetJson.put("hauteur",hauteur.toString());
-            objetJson.put("largeur",largeur.toString());
-            objetJson.put("pourGagner",pourGagner.toString());
+            objetJson.put("hauteur",parametresPartie.hauteur.toString());
+            objetJson.put("largeur",parametresPartie.largeur.toString());
+            objetJson.put("pourGagner",parametresPartie.pourGagner.toString());
 
         return objetJson;
 }
