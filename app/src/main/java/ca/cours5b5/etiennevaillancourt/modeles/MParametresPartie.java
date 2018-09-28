@@ -33,9 +33,9 @@ public class MParametresPartie extends Modele {
 
             MParametresPartie mParametresPartie = new MParametresPartie();
 
-                mParametresPartie.setHauteur(this.getHauteur());
-                mParametresPartie.setLargeur(this.getLargeur());
-                mParametresPartie.setPourGagner(this.getPourGagner());
+                mParametresPartie.setHauteur(hauteur);
+                mParametresPartie.setLargeur(largeur);
+                mParametresPartie.setPourGagner(pourGagner);
 
 
             return mParametresPartie;

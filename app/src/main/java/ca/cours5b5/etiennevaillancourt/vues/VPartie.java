@@ -2,7 +2,10 @@ package ca.cours5b5.etiennevaillancourt.vues;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Display;
 
+import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurObservation;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.etiennevaillancourt.modeles.MPartie;
@@ -27,15 +30,35 @@ public class VPartie extends Vue {
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
+        initialiser();
+        observerPartie();
+
 
     }
 
 
     private void initialiser(){
-
+        grille = this.findViewById(R.id.grille);
     }
 
     private void observerPartie(){
+
+        String name = MPartie.class.getSimpleName();
+
+        ControleurObservation.observerModele(name, new ListenerObservateur() {
+            @Override
+            public void reagirNouveauModele(Modele modele) {
+                super.reagirNouveauModele(modele);
+                MPartie partie = (MPartie) modele;
+
+                initialiserGrille(partie);
+            }
+
+            @Override
+            public void reagirChangementAuModele(Modele modele){
+                afficherParametres((MPartie) modele);
+            }
+        });
 
     }
 
@@ -44,6 +67,13 @@ public class VPartie extends Vue {
     }
 
     private void initialiserGrille(MPartie mPartie){
+    int hauteur = mPartie.getParametres().getHauteur();
+    int largeur = mPartie.getParametres().getLargeur();
+        Log.d("Atelier06", hauteur +"," + largeur);
+    grille.creerGrille(hauteur,largeur);
+    }
+
+    private void afficherParametres(MPartie partie){
 
     }
 
