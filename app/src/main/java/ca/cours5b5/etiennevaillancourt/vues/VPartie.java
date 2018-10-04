@@ -29,6 +29,7 @@ public class VPartie extends Vue {
 
     @Override
     protected void onFinishInflate(){
+        Log.d("Atelier06", "VPartie::onFinishInflate");
         super.onFinishInflate();
         initialiser();
         observerPartie();
@@ -42,12 +43,13 @@ public class VPartie extends Vue {
     }
 
     private void observerPartie(){
-
+        Log.d("Atelier06", "VPartie::observerPartie");
         String name = MPartie.class.getSimpleName();
 
         ControleurObservation.observerModele(name, new ListenerObservateur() {
             @Override
             public void reagirNouveauModele(Modele modele) {
+                Log.d("Atelier06", "VPartie::reagirNouveauModele");
                 super.reagirNouveauModele(modele);
                 MPartie partie = (MPartie) modele;
 
@@ -69,7 +71,6 @@ public class VPartie extends Vue {
     private void initialiserGrille(MPartie mPartie){
     int hauteur = mPartie.getParametres().getHauteur();
     int largeur = mPartie.getParametres().getLargeur();
-        Log.d("Atelier06", hauteur +"," + largeur);
     grille.creerGrille(hauteur,largeur);
     }
 

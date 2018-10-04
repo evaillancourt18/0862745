@@ -8,11 +8,11 @@ public class MPartie extends Modele {
 
 
     @AttributSerialisable
-    public MParametresPartie parametres = new MParametresPartie();
+    public MParametresPartie parametres;
     private final String __parametres= "parametres";
 
     public MPartie(MParametresPartie parametres){
-    this.parametres = getParametres();
+    this.parametres = parametres;
     }
 
     public MParametresPartie getParametres(){

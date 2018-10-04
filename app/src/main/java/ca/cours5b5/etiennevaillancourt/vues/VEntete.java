@@ -1,9 +1,10 @@
 package ca.cours5b5.etiennevaillancourt.vues;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
-public class VEntete extends Vue {
+public class VEntete extends AppCompatButton {
     public VEntete(Context context) {
         super(context);
     }
@@ -16,8 +17,17 @@ public class VEntete extends Vue {
         super(context, attrs, defStyleAttr);
     }
 
-
     private int colonne;
+
+    public VEntete(Context context, int colonne) {
+        super(context);
+        this.colonne=colonne;
+
+        setText(""+colonne);
+    }
+
+
+
 
 
 }

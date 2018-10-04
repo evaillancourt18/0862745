@@ -21,7 +21,7 @@ public class ControleurObservation {
     }
 
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
-
+        Log.d("Atelier06", "ControleurObservation::observerModele");
         if (nomModele.equals("MParametres")) {
             observations.put(MParametres.instance, listenerObservateur);
             lancerObservationPremiereFois(MParametres.instance);
