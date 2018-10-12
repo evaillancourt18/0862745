@@ -26,8 +26,6 @@ public class MParametres extends Modele implements Fournisseur{
     private String __parametresPartie= "parametresPartie";
 
 
-
-
     private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
@@ -85,6 +83,7 @@ public class MParametres extends Modele implements Fournisseur{
         choixHauteur = genererListeChoix(GConstantes.MINHAUTEUR,GConstantes.MAXHAUTEUR);
         choixLargeur = genererListeChoix(GConstantes.MINLARGEUR,GConstantes.MAXLARGEUR);
         choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
+
 
     }
 

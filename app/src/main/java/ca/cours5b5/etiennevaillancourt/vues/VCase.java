@@ -1,8 +1,11 @@
 package ca.cours5b5.etiennevaillancourt.vues;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+
+import ca.cours5b5.etiennevaillancourt.global.GCouleur;
 
 public class VCase extends AppCompatButton {
     public VCase(Context context) {
@@ -29,6 +32,16 @@ public class VCase extends AppCompatButton {
         this.rangee=rangee;
 
         setText("" +  rangee + "," + colonne);
+    }
+
+    public void afficherJeton(GCouleur jeton){
+
+        if(jeton.equals(GCouleur.JAUNE)){
+            this.setBackgroundColor(Color.YELLOW);
+
+        }else if(jeton.equals(GCouleur.ROUGE)){
+            this.setBackgroundColor(Color.RED);
+        }
     }
 
 }
