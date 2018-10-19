@@ -54,6 +54,7 @@ public class VPartie extends Vue {
                 MPartie partie = (MPartie) modele;
 
                 initialiserGrille(partie);
+                miseAJourGrille((MPartie) modele);
             }
 
             @Override

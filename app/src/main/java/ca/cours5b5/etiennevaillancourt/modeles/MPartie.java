@@ -51,7 +51,7 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
     protected void jouerCoup(int colonne){
-        Log.d("Atelier07","JouerCoup");
+        Log.d("Atelier07","JouerCoup: " + colonne);
         grille.placerJeton(colonne,couleurCourante);
         coups.add(colonne);
         prochaineCouleurCourante();

@@ -21,6 +21,7 @@ public class APartie extends Activite implements Fournisseur {
         Log.d("Atelier04", AMenuPrincipal.class.getSimpleName() + "::onCreate");
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_partie);
 
         if(savedInstanceState!=null){
@@ -28,6 +29,11 @@ public class APartie extends Activite implements Fournisseur {
             Map<String, Object> objetJson = Jsonification.enObjetJson(json);
             ControleurObservation.partie.aPartirObjetJson(objetJson);
         }
+
+
+
+
+
 
     }
 
