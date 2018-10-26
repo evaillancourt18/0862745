@@ -1,41 +1,36 @@
 package ca.cours5b5.etiennevaillancourt.vues;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
-import java.util.Arrays;
+import java.util.List;
 
 import ca.cours5b5.etiennevaillancourt.R;
 import ca.cours5b5.etiennevaillancourt.controleurs.Action;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurObservation;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerObservateur;
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurObservation;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
-import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 import ca.cours5b5.etiennevaillancourt.modeles.Modele;
 
-import static java.lang.Math.max;
-
-//ajout tag
 
 public class VParametres extends Vue {
 
-    Spinner spinHauteur, spinLargeur, spinGagner;
-    ArrayAdapter<Integer> adapterHauteur, adapterLargeur, adapterGagner;
+    private Spinner spinnerHauteur;
+    private Spinner spinnerLargeur;
+    private Spinner spinnerPourGagner;
 
-
-
-    static {
-        Log.d("Atelier04", VParametres.class.getSimpleName() + "::static");
-
-    }
+    private Action actionHauteur;
+    private Action actionLargeur;
+    private Action actionPourGagner;
 
     public VParametres(Context context) {
         super(context);
@@ -52,18 +47,59 @@ public class VParametres extends Vue {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.d("Atelier04", VParametres.class.getSimpleName() + "::onFinishInflate");
-        spinHauteur = this.findViewById(R.id.spinnerHauteur);
-        adapterHauteur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
-        spinHauteur.setAdapter(adapterHauteur);
 
-        spinHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        initialiser();
+
+        demanderActions();
+
+        installerListeners();
+
+        installerObservateur();
+
+    }
+
+    private void initialiser(){
+
+        spinnerHauteur = findViewById(R.id.spinner_hauteur);
+        spinnerLargeur = findViewById(R.id.spinner_largeur);
+        spinnerPourGagner = findViewById(R.id.spinner_pour_gagner);
+
+        initialiserSpinner(spinnerHauteur);
+        initialiserSpinner(spinnerLargeur);
+        initialiserSpinner(spinnerPourGagner);
+
+    }
+
+    private void demanderActions() {
+
+        actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
+        actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
+        actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
+
+    }
+
+
+    private void initialiserSpinner(Spinner spinner){
+
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+    }
+
+    private void installerListeners() {
+
+        installerListenerHauteur();
+        installerListenerLargeur();
+        installerListenerPourGagner();
+
+    }
+
+    private void installerListenerHauteur(){
+
+        spinnerHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Action actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
-                Integer leChoix = (Integer) parent.getAdapter().getItem(position);
-
-
+                int leChoix = (int) parent.getAdapter().getItem(position);
 
                 actionHauteur.setArguments(leChoix);
                 actionHauteur.executerDesQuePossible();
@@ -73,38 +109,35 @@ public class VParametres extends Vue {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
         });
+    }
 
-        spinLargeur = this.findViewById(R.id.spinnerLargeur);
-        adapterLargeur = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
-        spinLargeur.setAdapter(adapterLargeur);
+    private void installerListenerLargeur(){
 
-        spinLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Action actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
-                Integer leChoix = (Integer) parent.getAdapter().getItem(position);
+                int leChoix = (int) parent.getAdapter().getItem(position);
+
                 actionLargeur.setArguments(leChoix);
                 actionLargeur.executerDesQuePossible();
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
         });
+    }
 
-        spinGagner = this.findViewById(R.id.spinnerGagner);
-        adapterGagner = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
-        spinGagner.setAdapter(adapterGagner);
+    private void installerListenerPourGagner(){
 
-        spinGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPourGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Action actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
-                Integer leChoix = (Integer) parent.getAdapter().getItem(position);
+                int leChoix = (int) parent.getAdapter().getItem(position);
+
                 actionPourGagner.setArguments(leChoix);
                 actionPourGagner.executerDesQuePossible();
 
@@ -114,35 +147,95 @@ public class VParametres extends Vue {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
         });
+    }
 
-        ControleurObservation.observerModele(MParametres.class.getSimpleName(), new ListenerObservateur() {
-            @Override
-            public void reagirChangementAuModele(Modele modele) {
-                afficherParametres((MParametres) modele);
+    private void installerObservateur() {
+
+        ControleurObservation.observerModele(MParametres.class.getSimpleName(),
+                new ListenerObservateur() {
+
+                    @Override
+                    public void reagirChangementAuModele(Modele modele) {
+                        observerParametres(modele);
+                    }
+                });
+
+    }
+
+    private void observerParametres(Modele modele){
+        try{
+
+            MParametres mParametres = (MParametres) modele;
+
+            afficherLesChoix(mParametres);
+
+        }catch (ClassCastException e){
+
+            throw new ErreurObservation(e);
+
+        }
+    }
+
+    private void afficherLesChoix(MParametres mParametres){
+
+        afficherChoixHauteur(mParametres);
+        afficherChoixLargeur(mParametres);
+        afficherChoixPourGagner(mParametres);
+
+    }
+
+    private void afficherChoixHauteur(MParametres mParametres){
+
+        mettreAJourSpinner(spinnerHauteur,
+                mParametres.getChoixHauteur(),
+                mParametres.getParametresPartie().getHauteur());
+
+    }
+
+    private void afficherChoixLargeur(MParametres mParametres){
+
+        mettreAJourSpinner(spinnerLargeur,
+                mParametres.getChoixLargeur(),
+                mParametres.getParametresPartie().getLargeur());
+
+    }
+
+    private void afficherChoixPourGagner(MParametres mParametres){
+
+        mettreAJourSpinner(spinnerPourGagner,
+                mParametres.getChoixPourGagner(),
+                mParametres.getParametresPartie().getPourGagner());
+
+    }
+
+    private void mettreAJourSpinner(Spinner spinner, List<Integer> choix, int selectionCourante){
+
+        ArrayAdapter<Integer> adapter = (ArrayAdapter<Integer>) spinner.getAdapter();
+
+        adapter.clear();
+
+        mettreAJourAdapter(spinner, choix, selectionCourante, adapter);
+
+    }
+
+    private void mettreAJourAdapter(
+            Spinner spinner,
+            List<Integer> choix,
+            int selectionCourante,
+            ArrayAdapter<Integer> adapter) {
+
+        for(int i=0; i < choix.size(); i++){
+
+            int leChoix = choix.get(i);
+            adapter.add(leChoix);
+
+            if(leChoix == selectionCourante){
+
+                spinner.setSelection(i);
+
             }
-
-
-        });
-
+        }
     }
-    private void afficherParametres(MParametres modele){
-        adapterHauteur.clear();
-        adapterHauteur.addAll(modele.getChoixHauteur());
 
-        adapterLargeur.clear();
-        adapterLargeur.addAll(modele.getChoixLargeur());
-
-        adapterGagner.clear();
-        adapterGagner.addAll(modele.getChoixPourGagner());
-
-        spinHauteur.setSelection(adapterHauteur.getPosition(modele.getParametresPartie().getHauteur()));
-        spinLargeur.setSelection(adapterLargeur.getPosition(modele.getParametresPartie().getLargeur()));
-        spinGagner.setSelection(adapterGagner.getPosition(modele.getParametresPartie().getPourGagner()));
-
-
-
-
-    }
 }

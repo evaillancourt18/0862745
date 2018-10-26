@@ -5,25 +5,23 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Map;
 
-import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurSerialisation;
 
-public class Jsonification {
+public final class Jsonification {
+
+    private Jsonification(){}
 
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
- public static Map<String, Object> enObjetJson(String json){
+    public static Map<String, Object> aPartirChaineJson(String json) throws ErreurSerialisation {
 
-     Map<String, Object> objet = gson.fromJson(json,Map.class);
+        return gson.fromJson(json, Map.class);
 
-     return objet;
+    }
 
- }
+    public static String enChaineJson(Map<String, Object> objetJson) throws ErreurSerialisation {
 
- public static String enChaine(Map<String, Object> objetJson){
+        return gson.toJson(objetJson);
 
-     String temp = gson.toJson(objetJson);
-
-     return temp;
- }
-
+    }
 }

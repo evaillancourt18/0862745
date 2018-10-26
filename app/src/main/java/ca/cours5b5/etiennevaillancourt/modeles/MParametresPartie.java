@@ -3,6 +3,7 @@ package ca.cours5b5.etiennevaillancourt.modeles;
 import java.util.HashMap;
 import java.util.Map;
 
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
 
@@ -20,38 +21,29 @@ public class MParametresPartie extends Modele {
     public Integer pourGagner;
     protected final String __pourGagner = "pourGagner";
 
-    public static MParametresPartie aPartirMParametres(MParametres mParametres){
-        MParametresPartie mParametresPartie;
 
-        mParametresPartie = mParametres.getParametresPartie().cloner();
+    public MParametresPartie(){
+        super();
 
-        return mParametresPartie;
+        hauteur = GConstantes.HAUTEUR_PAR_DEFAUT;
+        largeur = GConstantes.LARGEUR_PAR_DEFAUT;
+        pourGagner = GConstantes.POUR_GAGNER_PAR_DEFAUT;
 
     }
 
     public MParametresPartie cloner(){
 
-            MParametresPartie mParametresPartie = new MParametresPartie();
+        MParametresPartie mParametresPartie = new MParametresPartie();
 
-                mParametresPartie.setHauteur(hauteur);
-                mParametresPartie.setLargeur(largeur);
-                mParametresPartie.setPourGagner(pourGagner);
+        mParametresPartie.setHauteur(hauteur);
+        mParametresPartie.setLargeur(largeur);
+        mParametresPartie.setPourGagner(pourGagner);
 
-
-            return mParametresPartie;
-
+        return mParametresPartie;
 
     }
 
-    public MParametresPartie(){
-        this.hauteur = GConstantes.DEFAUTHAUTEUR;
-        this.largeur = GConstantes.DEFAUTLARGEUR;
-        this.pourGagner = GConstantes.DEFAUTGAGNER;
-    }
-
-    public Integer getHauteur() {
-        return hauteur;
-    }
+    public Integer getHauteur() { return hauteur; }
 
     public Integer getLargeur() {
         return largeur;
@@ -61,40 +53,59 @@ public class MParametresPartie extends Modele {
         return pourGagner;
     }
 
-    public void setHauteur(Integer hauteur) {
+    public void setHauteur(int hauteur) {
         this.hauteur = hauteur;
     }
 
-    public void setLargeur(Integer largeur){
+    public void setLargeur(int largeur) {
         this.largeur = largeur;
     }
 
-    public void setPourGagner(Integer pourGagner) {
+    public void setPourGagner(int pourGagner) {
         this.pourGagner = pourGagner;
     }
 
-
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) {
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation  {
+        for(Map.Entry<String, Object> entry : objetJson.entrySet()){
 
-        for(Map.Entry entry : objetJson.entrySet()){
-            if(entry.getKey().equals("hauteur")){
-                hauteur = Integer.valueOf((String)entry.getValue());
-            }else if(entry.getKey().equals("largeur")){
-                largeur = Integer.valueOf((String)entry.getValue());
-            }else if(entry.getKey().equals("pourGagner")){
-                pourGagner=Integer.valueOf((String)entry.getValue());
+            String chaineValeur = (String) entry.getValue();
+
+            switch (entry.getKey()){
+
+                case __hauteur:
+
+                    hauteur = Integer.valueOf(chaineValeur);
+                    break;
+
+                case __largeur:
+
+                    largeur = Integer.valueOf(chaineValeur);
+                    break;
+
+
+                case __pourGagner:
+
+                    pourGagner = Integer.valueOf(chaineValeur);
+                    break;
+
+                default:
+
+                    throw new ErreurSerialisation("Attribut inconnu: " + entry.getKey());
             }
         }
     }
 
     @Override
-    public Map<String, Object> enObjetJson() {
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation  {
         Map<String, Object> objetJson = new HashMap<>();
 
-        objetJson.put("hauteur",hauteur.toString());
-        objetJson.put("largeur",largeur.toString());
-        objetJson.put("pourGagner",pourGagner.toString());
+        objetJson.put(__hauteur, hauteur.toString());
+        objetJson.put(__largeur, largeur.toString());
+        objetJson.put(__pourGagner, pourGagner.toString());
+
         return objetJson;
+
     }
+
 }

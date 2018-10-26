@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="Identifiant">Bonjour!</string>
-    <string name="Hauteur">Hauteur</string>
-    <string name="Largeur">Largeur</string>
-    <string name="PourGagner">Pour Gagner</string>
-    <string name="BoutonParam">Paramètres</string>
-</resources>

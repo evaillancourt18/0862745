@@ -1,26 +1,23 @@
 package ca.cours5b5.etiennevaillancourt.vues;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.etiennevaillancourt.R;
-import ca.cours5b5.etiennevaillancourt.activites.AParametres;
 import ca.cours5b5.etiennevaillancourt.controleurs.Action;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
 
+
 public class VMenuPrincipal extends Vue {
 
+    private Button boutonParametres;
+    private Action actionParametres;
 
-    static{
-        Log.d("Atelier04", VMenuPrincipal.class.getSimpleName() + "::static");
-
-    }
+    private Button boutonPartie;
+    private Action actionPartie;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -37,30 +34,61 @@ public class VMenuPrincipal extends Vue {
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
-        Log.d("Atelier04", VMenuPrincipal.class.getSimpleName() + "::onFinishInflate");
+
+        recupererControles();
+
+        demanderActions();
+
+        installerListeners();
+
+    }
 
 
-        Button boutonParametres = this.findViewById(R.id.bouton_parametres);
-        boutonParametres.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Action actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
-                actionParametres.executerDesQuePossible();
-            }
-        });
+    private void recupererControles() {
 
-        Button boutonPartie = this.findViewById(R.id.bouton_partie);
+        boutonParametres = findViewById(R.id.bouton_parametres);
+
+        boutonPartie = findViewById(R.id.bouton_partie);
+
+    }
+
+    private void demanderActions() {
+
+        actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
+
+        actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
+
+    }
+
+
+    private void installerListeners() {
+
+        installerListenerParametres();
+
+        installerListenerPartie();
+
+    }
+
+    private void installerListenerPartie() {
+
         boutonPartie.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Action actionPartie = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARTIE);
+            public void onClick(View view) {
                 actionPartie.executerDesQuePossible();
             }
         });
 
-
-
     }
 
+    private void installerListenerParametres() {
+
+        boutonParametres.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionParametres.executerDesQuePossible();
+            }
+        });
+
+    }
 
 }

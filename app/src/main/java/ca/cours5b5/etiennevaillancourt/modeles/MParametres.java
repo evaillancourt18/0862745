@@ -1,68 +1,43 @@
 package ca.cours5b5.etiennevaillancourt.modeles;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
-import ca.cours5b5.etiennevaillancourt.exceptions.ErreurDeSerialisation;
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurAction;
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
 
-import static java.lang.Math.max;
-
-public class MParametres extends Modele implements Fournisseur{
-
-    public static MParametres instance = new MParametres();
+public class MParametres extends Modele implements Fournisseur {
 
     @AttributSerialisable
     public MParametresPartie parametresPartie;
-    private String __parametresPartie= "parametresPartie";
-
+    private String __parametresPartie = "parametresPartie";
 
     private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
 
-    public MParametres(){
-        parametresPartie = new MParametresPartie();
-        choixHauteur = new ArrayList<Integer>();
-        choixLargeur = new ArrayList<Integer>();
-        choixPourGagner = new ArrayList<Integer>();
-        genererListesDeChoix();
-        ControleurAction.fournirAction(this, GCommande.CHOISIR_HAUTEUR, new ListenerFournisseur() {
-            @Override
-            public void executer(Object... args) {
-                parametresPartie.setHauteur((int)args[0]);
-                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
-            }
-        });
-        ControleurAction.fournirAction(this, GCommande.CHOISIR_LARGEUR, new ListenerFournisseur() {
-            @Override
-            public void executer(Object... args) {
-                parametresPartie.setLargeur((int)args[0]);
-                choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
-            }
-        });
-        ControleurAction.fournirAction(this, GCommande.CHOISIR_POUR_GAGNER, new ListenerFournisseur() {
-            @Override
-            public void executer(Object... args) {
-                parametresPartie.setPourGagner((int)args[0]);
-            }
-        });
+    public MParametres() {
+        super();
 
+        this.parametresPartie = new MParametresPartie();
+
+        fournirActions();
+
+        genererListesDeChoix();
 
     }
 
-
-    public List<Integer> getChoixHauteur(){
-    return choixHauteur;
+    public List<Integer> getChoixHauteur() {
+        return choixHauteur;
     }
 
     public List<Integer> getChoixLargeur() {
@@ -78,50 +53,154 @@ public class MParametres extends Modele implements Fournisseur{
     }
 
 
+    private void fournirActions() {
 
-    private void genererListesDeChoix(){
-        choixHauteur = genererListeChoix(GConstantes.MINHAUTEUR,GConstantes.MAXHAUTEUR);
-        choixLargeur = genererListeChoix(GConstantes.MINLARGEUR,GConstantes.MAXLARGEUR);
-        choixPourGagner = genererListeChoix(GConstantes.MINGAGNER, max(parametresPartie.getHauteur(),parametresPartie.getLargeur())*75/100);
-
+        fournirActionHauteur();
+        fournirActionLargeur();
+        fournirActionPourGagner();
 
     }
 
-    private List<Integer> genererListeChoix(int min, int max){
-        List<Integer> temp = new ArrayList<Integer>();
-        for(int i = min;i<=max;i++){
-            temp.add(i);
+    private void fournirActionHauteur() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_HAUTEUR,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setHauteur((Integer) args[0]);
+                            genererListeChoixPourGagner();
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionLargeur() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_LARGEUR,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setLargeur((int) args[0]);
+                            genererListeChoixPourGagner();
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionPourGagner() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_POUR_GAGNER,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setPourGagner((Integer) args[0]);
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void genererListesDeChoix() {
+
+        genererListeChoixHauteur();
+        genererListeChoixLargeur();
+        genererListeChoixPourGagner();
+
+    }
+
+    private List<Integer> genererListeChoix(int min, int max) {
+
+        List<Integer> listeChoix = new ArrayList<>();
+
+        for (int i = min; i <= max; i++) {
+            listeChoix.add(i);
         }
-        return temp;
+
+        return listeChoix;
+
     }
 
+    private void genererListeChoixHauteur() {
 
+        choixHauteur = genererListeChoix(GConstantes.HAUTEUR_MIN, GConstantes.HAUTEUR_MAX);
 
+    }
 
+    private void genererListeChoixLargeur() {
 
+        choixLargeur = genererListeChoix(GConstantes.LARGEUR_MIN, GConstantes.LARGEUR_MAX);
+
+    }
+
+    private void genererListeChoixPourGagner() {
+
+        int pourGagnerMax = calculerPourGagnerMax();
+
+        ajusterPourGagnerAuBesoin(pourGagnerMax);
+
+        choixPourGagner = genererListeChoix(GConstantes.POUR_GAGNER_MIN, pourGagnerMax);
+
+    }
+
+    private int calculerPourGagnerMax() {
+
+        return Math.max(parametresPartie.getHauteur(), parametresPartie.getLargeur()) * 75 / 100;
+
+    }
+
+    private void ajusterPourGagnerAuBesoin(int pourGagnerMax) {
+
+        if (parametresPartie.getPourGagner() >= pourGagnerMax) {
+            parametresPartie.setPourGagner(pourGagnerMax);
+        }
+
+    }
 
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) {
-        for(Map.Entry entry : objetJson.entrySet()){
-            if(entry.getKey().equals("hauteur")){
-                parametresPartie.hauteur = Integer.valueOf((String)entry.getValue());
-            }else if(entry.getKey().equals("largeur")){
-                parametresPartie.largeur = Integer.valueOf((String)entry.getValue());
-            }else if(entry.getKey().equals("pourGagner")){
-                parametresPartie.pourGagner=Integer.valueOf((String)entry.getValue());
-            }
-        }
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
+
+        parametresPartie.aPartirObjetJson((Map<String, Object>) objetJson.get(__parametresPartie));
+
     }
 
     @Override
-    public Map<String, Object> enObjetJson() {
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation {
+
         Map<String, Object> objetJson = new HashMap<>();
 
-            objetJson.put("hauteur",parametresPartie.hauteur.toString());
-            objetJson.put("largeur",parametresPartie.largeur.toString());
-            objetJson.put("pourGagner",parametresPartie.pourGagner.toString());
+        objetJson.put(__parametresPartie, parametresPartie.enObjetJson());
 
         return objetJson;
-}
+
+    }
 
 }

@@ -1,17 +1,20 @@
 package ca.cours5b5.etiennevaillancourt.global;
 
-public class GConstantes {
+public final class GConstantes {
 
-    public static int MINHAUTEUR=4;
-    public static int MAXHAUTEUR=10;
-    public static int DEFAUTHAUTEUR=6;
-    public static int MINLARGEUR=4;
-    public static int MAXLARGEUR=10;
-    public static int DEFAUTLARGEUR=7;
-    public static int MINGAGNER=3;
-    public static int MAXGAGNER=4;
-    public static int DEFAUTGAGNER=4;
+    private GConstantes(){}
 
-    public static char SEPARATEUR='/';
+    public static final int LARGEUR_MIN = 4;
+    public static final int LARGEUR_MAX = 10;
+    public static final int LARGEUR_PAR_DEFAUT = 7;
+
+    public static final int HAUTEUR_MIN = 4;
+    public static final int HAUTEUR_MAX = 10;
+    public static final int HAUTEUR_PAR_DEFAUT = 6;
+
+    public static final int POUR_GAGNER_MIN = 3;
+    public static final int POUR_GAGNER_PAR_DEFAUT = 4;
+
+    public static final String EXTENSION_PAR_DEFAUT=".json";
 
 }
