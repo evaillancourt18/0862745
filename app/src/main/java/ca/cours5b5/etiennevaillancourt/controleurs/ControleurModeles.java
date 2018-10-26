@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.etiennevaillancourt.donnees.Serveur;
 import ca.cours5b5.etiennevaillancourt.donnees.SourceDeDonnees;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurModele;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
@@ -13,6 +14,7 @@ import ca.cours5b5.etiennevaillancourt.modeles.MParametresPartie;
 import ca.cours5b5.etiennevaillancourt.modeles.MPartie;
 import ca.cours5b5.etiennevaillancourt.modeles.Modele;
 import ca.cours5b5.etiennevaillancourt.donnees.Disque;
+import ca.cours5b5.etiennevaillancourt.usagers.UsagerCourant;
 
 public final class ControleurModeles {
 
@@ -30,6 +32,7 @@ public final class ControleurModeles {
 
         listeDeSauvegardes = new ArrayList<>();
         listeDeSauvegardes.add(Disque.getInstance());
+        listeDeSauvegardes.add(Serveur.getInstance());
 
     }
 
@@ -134,6 +137,15 @@ public final class ControleurModeles {
 
             }
         }
+    }
+
+    private static String getCheminSauvegarde(String nomModele){
+
+        String resultat;
+
+        resultat = nomModele + "/" + UsagerCourant.getId();
+
+        return resultat;
     }
 
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "321967137764",
+    "firebase_url": "https://etiennevaillancourt-8b0d0.firebaseio.com",
+    "project_id": "etiennevaillancourt-8b0d0",
+    "storage_bucket": "etiennevaillancourt-8b0d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321967137764:android:6d7de43c5f9a5bbb",
+        "android_client_info": {
+          "package_name": "ca.cours5b5.etiennevaillancourt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321967137764-v2lunkojfqvrvqpfb07nj9mg4h2spv2v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.cours5b5.etiennevaillancourt",
+            "certificate_hash": "d0685ee2cb9ca97036ecbf1d3412bc0ba4f5298d"
+          }
+        },
+        {
+          "client_id": "321967137764-e7uluivsv5o09a909udt7tdlgtgplbvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRpXdwm3n8UpN_BCppnAVcUtaA_O46Phw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321967137764-e7uluivsv5o09a909udt7tdlgtgplbvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
