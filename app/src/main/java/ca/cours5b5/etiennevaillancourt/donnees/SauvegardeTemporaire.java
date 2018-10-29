@@ -1,10 +1,12 @@
 package ca.cours5b5.etiennevaillancourt.donnees;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.Map;
 
 
+import ca.cours5b5.etiennevaillancourt.exceptions.ErreurModele;
 import ca.cours5b5.etiennevaillancourt.serialisation.Jsonification;
 
 public class SauvegardeTemporaire extends SourceDeDonnees {
@@ -15,8 +17,9 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         this.bundle = bundle;
     }
 
+
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde) {
+    public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
 
         if(bundle != null && bundle.containsKey(cheminSauvegarde)){
 
@@ -24,17 +27,18 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-            return objetJson;
+            listenerChargement.reagirSucces(objetJson);
 
         }else{
-
-            return null;
+            listenerChargement.reagirErreur(new ErreurModele("Clé inexistante"));
 
         }
     }
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
+
+        Log.d("Atelier11", "sauvegarderModele: sauvegardeTemp ");
         if(bundle != null){
 
             String json = Jsonification.enChaineJson(objetJson);
