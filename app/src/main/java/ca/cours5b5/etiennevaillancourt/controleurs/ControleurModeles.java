@@ -52,11 +52,13 @@ public final class ControleurModeles {
         Log.d("Atelier11", "sauvegarderModeleDansCetteSource: allo");
         Modele modele = modelesEnMemoire.get(nomModele);
 
+        String cheminDeSauvegarde = getCheminSauvegarde(nomModele);
+
         if (modele != null) {
 
             Map<String, Object> objetJson = modele.enObjetJson();
 
-            sourceDeDonnees.sauvegarderModele(nomModele, objetJson);
+            sourceDeDonnees.sauvegarderModele(cheminDeSauvegarde, objetJson);
 
         }
     }

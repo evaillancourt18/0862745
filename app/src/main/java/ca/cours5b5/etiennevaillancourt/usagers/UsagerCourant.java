@@ -19,7 +19,16 @@ public class UsagerCourant {
 
         String identifiant;
 
-        identifiant = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(siUsagerConnecte()){
+
+            identifiant = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        }
+        else{
+
+            identifiant = "defaut";
+
+        }
 
         return identifiant;
     }
