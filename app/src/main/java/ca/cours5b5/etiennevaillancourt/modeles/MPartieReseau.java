@@ -84,10 +84,20 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation{
 
+       super.aPartirObjetJson(objetJson);
+       idJoueurHote = (String) objetJson.get(__idJoueurHote);
+       idJoueurInvite = (String) objetJson.get(__idJoueurInvite);
+
     }
 
     @Override
     public Map<String, Object> enObjetJson() throws ErreurSerialisation{
-        return null;
+        Map<String, Object> objetJson = super.enObjetJson();
+
+        objetJson.put(__idJoueurHote, idJoueurHote);
+        objetJson.put(__idJoueurInvite, idJoueurInvite);
+
+
+        return objetJson;
     }
 }
