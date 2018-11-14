@@ -14,11 +14,11 @@ import ca.cours5b5.etiennevaillancourt.serialisation.AttributSerialisable;
 public class MPartieReseau extends MPartie implements Fournisseur, Identifiable {
     @AttributSerialisable
     public String idJoueurInvite;
-    private String __idJoueurInvite;
+    private String __idJoueurInvite = "idJoueurInvite";
 
     @AttributSerialisable
     public String idJoueurHote;
-    private String __idJoueurHote;
+    private String __idJoueurHote = "idJoueurHote";;
 
     public MPartieReseau(MParametresPartie parametres) {
         super(parametres);

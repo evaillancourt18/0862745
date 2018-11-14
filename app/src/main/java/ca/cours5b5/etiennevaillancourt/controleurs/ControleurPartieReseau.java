@@ -3,6 +3,7 @@ package ca.cours5b5.etiennevaillancourt.controleurs;
 import android.util.Log;
 
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerGetModele;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.global.GConstantes;
 import ca.cours5b5.etiennevaillancourt.modeles.MPartieReseau;
 import ca.cours5b5.etiennevaillancourt.modeles.Modele;
@@ -39,8 +40,11 @@ public class ControleurPartieReseau {
         }else{
             connecterEnTantQueJoueurInvite(cheminCoupJoueurHote,cheminCoupJoueurInvite);
         }
-        Log.d("Atelier13", "connecterAuServeur");
 
+
+        proxyRecevoirCoups.setActionNouvelItem(GCommande.RECEVOIR_COUP_RESEAU);
+        proxyRecevoirCoups.connecterAuServeur();
+        proxyEmettreCoups.connecterAuServeur();
     }
 
     private void connecterEnTantQueJoueurHote(String cheminCoupsJoueurHote, String cheminCoupsJoueurInvite){
@@ -53,8 +57,8 @@ public class ControleurPartieReseau {
     }
     public void deconnecterDuServeur(){
 
-        proxyEmettreCoups = null;
-        proxyRecevoirCoups = null;
+        proxyEmettreCoups.deconnecterDuServeur();
+        proxyRecevoirCoups.deconnecterDuServeur();
 
     }
     public void transmettreCoup(Integer idColonne){
