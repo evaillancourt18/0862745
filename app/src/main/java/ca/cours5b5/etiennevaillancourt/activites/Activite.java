@@ -7,6 +7,7 @@ import ca.cours5b5.etiennevaillancourt.controleurs.ControleurModeles;
 import ca.cours5b5.etiennevaillancourt.donnees.Disque;
 import ca.cours5b5.etiennevaillancourt.donnees.SauvegardeTemporaire;
 import ca.cours5b5.etiennevaillancourt.donnees.Serveur;
+import ca.cours5b5.etiennevaillancourt.donnees.Transition;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 
 
@@ -27,6 +28,7 @@ public abstract class Activite extends AppCompatActivity {
                 new SauvegardeTemporaire(savedInstanceState),
                 Serveur.getInstance(),
                 Disque.getInstance());
+
 
         
     }

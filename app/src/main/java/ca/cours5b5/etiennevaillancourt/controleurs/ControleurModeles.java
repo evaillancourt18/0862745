@@ -14,9 +14,11 @@ import ca.cours5b5.etiennevaillancourt.donnees.SauvegardeTemporaire;
 import ca.cours5b5.etiennevaillancourt.donnees.Serveur;
 import ca.cours5b5.etiennevaillancourt.donnees.SourceDeDonnees;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurModele;
+import ca.cours5b5.etiennevaillancourt.modeles.Identifiable;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametresPartie;
 import ca.cours5b5.etiennevaillancourt.modeles.MPartie;
+import ca.cours5b5.etiennevaillancourt.modeles.MPartieReseau;
 import ca.cours5b5.etiennevaillancourt.modeles.Modele;
 import ca.cours5b5.etiennevaillancourt.donnees.Disque;
 import ca.cours5b5.etiennevaillancourt.usagers.UsagerCourant;
@@ -107,6 +109,19 @@ public final class ControleurModeles {
                     MParametres mParametres = (MParametres) modele;
                     MPartie mPartie = new MPartie(mParametres.getParametresPartie().cloner());
                     listenerGetModele.reagirAuModele(mPartie);
+
+                }
+            });
+
+
+        } else if (nomModele.equals(MPartieReseau.class.getSimpleName())) {
+
+            getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
+                @Override
+                public void reagirAuModele(Modele modele) {
+                    MParametres mParametres = (MParametres) modele;
+                    MPartieReseau mPartieReseau = new MPartieReseau(mParametres.getParametresPartie().cloner());
+                    listenerGetModele.reagirAuModele(mPartieReseau);
 
                 }
             });
@@ -213,7 +228,13 @@ public final class ControleurModeles {
 
         String resultat;
 
-        resultat = nomModele + "/" + UsagerCourant.getId();
+        Modele modele = modelesEnMemoire.get(nomModele);
+
+        if(modele!=null && modele instanceof Identifiable){
+            resultat = nomModele + "/" + ((Identifiable) modele).getId();
+        }else{
+            resultat = nomModele + "/" + UsagerCourant.getId();
+        }
 
         return resultat;
     }
