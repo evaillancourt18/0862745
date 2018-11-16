@@ -22,6 +22,7 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
 
     public MPartieReseau(MParametresPartie parametres) {
         super(parametres);
+        fournirActionRecevoirCoup();
     }
 
     @Override
@@ -38,12 +39,14 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
                     public void executer(Object... args) {
                         try{
 
-                            //TODO
+                          int colonne = Integer.parseInt((String)args[0]);
+
+                          recevoirCoupReseau(colonne);
 
 
                         }catch(ClassCastException e){
 
-                            //TODO
+                            throw new ErreurAction(e);
 
                         }
                     }
@@ -78,7 +81,7 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
     }
 
     private void recevoirCoupReseau(int colonne){
-
+        jouerCoup(colonne);
     }
 
     @Override

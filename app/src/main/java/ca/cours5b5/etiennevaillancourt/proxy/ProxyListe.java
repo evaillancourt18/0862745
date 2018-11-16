@@ -1,6 +1,7 @@
 package ca.cours5b5.etiennevaillancourt.proxy;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -54,9 +55,12 @@ public class ProxyListe extends Proxy implements Fournisseur {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 if(actionNouvelItem!=null) {
-                    actionNouvelItem.setArguments(dataSnapshot.getValue());
+                    actionNouvelItem.setArguments(dataSnapshot.getValue().toString());
                     actionNouvelItem.executerDesQuePossible();
+                    Log.d("test", "onChildAdded: " + actionNouvelItem);
                 }
+
+
             }
 
             @Override
