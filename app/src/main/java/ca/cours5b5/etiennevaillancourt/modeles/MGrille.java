@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurSerialisation;
 import ca.cours5b5.etiennevaillancourt.global.GCouleur;
+import ca.cours5b5.etiennevaillancourt.global.GDirection;
 
 
 public class MGrille extends Modele  {
@@ -53,6 +54,27 @@ public class MGrille extends Modele  {
 
         throw new UnsupportedOperationException();
 
+    }
+
+
+    public boolean siCouleurGagne(GCouleur couleur, int pourGagner){
+        return false;
+    }
+
+    private boolean siCouleurGagneCetteColonne(GCouleur couleur, int idColonne, int pourGagner){
+        return false;
+    }
+
+    private boolean siCouleurGagneCetteCase(GCouleur couleur, int idColonne, int idRangee, int pourGagner){
+        return false;
+    }
+
+    private boolean siCouleurGagneDansCetteDirection(GCouleur couleur, int idColonne, int idRangee, GDirection direction, int pourGagner){
+        return false;
+    }
+
+    private boolean siMemeCouleurCetteCase(GCouleur couleur, int idColonne, int idRangee){
+        return false;
     }
 
 }
