@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurPartie;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurAction;
@@ -86,6 +87,10 @@ public class MPartie extends Modele implements Fournisseur {
             listeCoups.add(colonne);
 
             grille.placerJeton(colonne, couleurCourante);
+
+            if(grille.siCouleurGagne(couleurCourante,parametres.getPourGagner())){
+                ControleurPartie.getInstance().gagnerPartie(couleurCourante);
+            }
 
             prochaineCouleurCourante();
 
