@@ -222,6 +222,11 @@ public final class ControleurModeles {
 
             }
         }
+
+        String cheminSauvegarde = getCheminSauvegarde(nomModele);
+        for(SourceDeDonnees source : listeDeSauvegardes){
+            source.detruireSauvegarde(cheminSauvegarde);
+        }
     }
 
     private static String getCheminSauvegarde(String nomModele) {

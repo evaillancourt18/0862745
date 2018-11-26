@@ -198,5 +198,7 @@ public class MPartie extends Modele implements Fournisseur {
 
     }
 
-
+    public GCouleur getCouleurCourante() {
+        return couleurCourante;
+    }
 }

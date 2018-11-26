@@ -51,6 +51,11 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         }
     }
 
+    @Override
+    public void detruireSauvegarde(String cheminDeSauvegarde) {
+
+    }
+
 
     private String getCle(String cheminDeSauvegarde){
         return getNomModele(cheminDeSauvegarde);

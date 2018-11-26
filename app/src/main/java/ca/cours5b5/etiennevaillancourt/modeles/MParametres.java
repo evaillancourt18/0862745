@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurModeles;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.exceptions.ErreurAction;
@@ -24,6 +25,8 @@ public class MParametres extends Modele implements Fournisseur {
     private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
+
+    private String[] listeAEffacer = {MPartie.class.getSimpleName(), MParametres.class.getSimpleName(), MPartieReseau.class.getSimpleName()};
 
     public MParametres() {
         super();
@@ -58,6 +61,7 @@ public class MParametres extends Modele implements Fournisseur {
         fournirActionHauteur();
         fournirActionLargeur();
         fournirActionPourGagner();
+        fournirActionEffacer();
 
     }
 
@@ -118,6 +122,30 @@ public class MParametres extends Modele implements Fournisseur {
                         try {
 
                             getParametresPartie().setPourGagner((Integer) args[0]);
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionEffacer() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.EFFACER_PARTIE,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+                            for(String modele: listeAEffacer){
+                                ControleurModeles.detruireModele(modele);
+                            }
+
 
                         } catch (ClassCastException
                                 | IndexOutOfBoundsException e) {

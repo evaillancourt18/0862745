@@ -13,4 +13,6 @@ public abstract class SourceDeDonnees {
         return cheminDeSauvegarde.split("/")[0];
     }
 
+    public abstract void detruireSauvegarde(String cheminDeSauvegarde);
+
 }
