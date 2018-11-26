@@ -6,7 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 
+import ca.cours5b5.etiennevaillancourt.controleurs.Action;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurPartie;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.global.GCommande;
@@ -36,6 +38,13 @@ public abstract class Vue extends ConstraintLayout implements Fournisseur {
                 String message = "Le joueur " + couleur + " a gagné";
                 Snackbar fenetreMessage = Snackbar.make(Vue.this, message , Snackbar.LENGTH_SHORT);
                 fenetreMessage.show();
+                fenetreMessage.addCallback(new Snackbar.Callback(){
+                   @Override
+                   public void onDismissed(Snackbar snackbar, int event){
+                       ControleurPartie.getInstance().quitterPartie();
+
+                   }
+                });
 
             }
         });

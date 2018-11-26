@@ -20,6 +20,8 @@ public enum GCommande {
 
     AFFICHER_GAGNANT,
 
-    EFFACER_PARTIE
+    EFFACER_PARTIE,
+
+    QUITTER
 
 }

@@ -231,4 +231,5 @@ public class MParametres extends Modele implements Fournisseur {
 
     }
 
+
 }
