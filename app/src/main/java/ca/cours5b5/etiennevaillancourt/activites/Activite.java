@@ -3,15 +3,19 @@ package ca.cours5b5.etiennevaillancourt.activites;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import ca.cours5b5.etiennevaillancourt.controleurs.ControleurAction;
 import ca.cours5b5.etiennevaillancourt.controleurs.ControleurModeles;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.etiennevaillancourt.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.etiennevaillancourt.donnees.Disque;
 import ca.cours5b5.etiennevaillancourt.donnees.SauvegardeTemporaire;
 import ca.cours5b5.etiennevaillancourt.donnees.Serveur;
 import ca.cours5b5.etiennevaillancourt.donnees.Transition;
+import ca.cours5b5.etiennevaillancourt.global.GCommande;
 import ca.cours5b5.etiennevaillancourt.modeles.MParametres;
 
 
-public abstract class Activite extends AppCompatActivity {
+public abstract class Activite extends AppCompatActivity implements Fournisseur{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,13 @@ public abstract class Activite extends AppCompatActivity {
 
         initialiserControleurModeles(savedInstanceState);
         initialiserApplication();
+
+        ControleurAction.fournirAction(this, GCommande.QUITTER, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                Activite.this.finish();
+            }
+        });
 
     }
 
